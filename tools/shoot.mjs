@@ -15,6 +15,12 @@ for (const [name, url] of list) {
       const b = page.getByRole("button", { name: t, exact: true }).first();
       if (await b.isVisible().catch(() => false)) await b.click({ timeout: 2000 }).catch(() => {});
     }
+    for (const t of ["No thanks", "No, thanks", "Maybe later", "Continue shopping"]) {
+      const l = page.getByText(t, { exact: false }).first();
+      if (await l.isVisible().catch(() => false)) await l.click({ timeout: 2000 }).catch(() => {});
+    }
+    const x = page.locator('[aria-label="Close"], [aria-label="close"], [aria-label="Close dialog"], button.modal__close, .klaviyo-close-form').first();
+    if (await x.isVisible().catch(() => false)) await x.click({ timeout: 2000 }).catch(() => {});
     await page.keyboard.press("Escape").catch(() => {});
     await page.waitForTimeout(1500);
     await page.screenshot({ path: `images/${name}.jpg`, type: "jpeg", quality: 80 });
